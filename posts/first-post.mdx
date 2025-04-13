@@ -1,0 +1,156 @@
+---
+title: "Day of the Week : Zeller's Congruence"
+date: "14-03-2024"
+author: "GDG X SVEC Programming Club"
+tags: ["Paytm", "Mercer", "Adobe", "Microsoft", "JPMC"]
+description: "A comprehensive guide to solving the Day of the Week problem using Zeller's Congruence, with implementations in Java, C++, and Python."
+---
+
+# Cracking the "Day of the Week" Problem Like a Pro ✨
+
+Ever wondered how to programmatically determine the day of the week for any given date? In this guide, we'll explore the elegant solution using **Zeller's Congruence** - a powerful algorithm that's been reliable since 1887. We'll solve the [Naukri Code360](https://www.naukri.com/code360/problems/day-of-the-week_668910) challenge while learning some fascinating datetime mathematics!
+
+## Problem Overview 📝
+
+Given a date as three integers:
+- **Day**: 1 to 31
+- **Month**: 1 to 12
+- **Year**: Any positive integer
+
+Return the corresponding day of the week as a string (e.g., "Monday", "Tuesday", etc.).
+
+### Example Input/Output
+```text
+Input: day = 15, month = 8, year = 1947
+Output: "Friday" (India's Independence Day)
+
+Input: day = 1, month = 1, year = 2000
+Output: "Saturday" (First day of the millennium)
+```
+
+## Understanding Zeller's Congruence 🧮
+
+Zeller's Congruence is a mathematical formula that calculates the day of the week for any given date. The formula maps the result to numbers 0-6, where:
+
+- 0 = Saturday
+- 1 = Sunday
+- 2 = Monday
+- ...and so on
+
+The formula is:
+
+```text
+h = (q + (13 * (m + 1) / 5) + K + (K / 4) + (J / 4) + 5 * J) % 7
+
+Where:
+- h: day of week (0-6)
+- q: day of month
+- m: month (March = 3, ..., February = 14)
+- K: year % 100
+- J: year / 100
+```
+
+## C++ Implementation 🎮
+
+```cpp
+#include <string>
+#include <vector>
+using namespace std;
+
+string dayOfTheWeek(int day, int month, int year) {
+    // Adjust month and year for Zeller's
+    if (month < 3) {
+        month += 12;
+        year -= 1;
+    }
+    
+    // Calculate using Zeller's Congruence
+    int q = day;
+    int m = month;
+    int K = year % 100;    // Year in century
+    int J = year / 100;    // Century
+    
+    // Apply Zeller's formula
+    int h = (q + ((13 * (m + 1)) / 5) + K + (K / 4) + (J / 4) - 2 * J) % 7;
+    
+    // Map result to day names
+    vector<string> days = {
+        "Saturday", "Sunday", "Monday",
+        "Tuesday", "Wednesday", "Thursday", "Friday"
+    };
+    return days[h];
+}
+```
+
+## Java Implementation ☕
+
+```java
+public class Solution {
+    public static String dayOfTheWeek(int day, int month, int year) {
+        // Adjust month and year for Zeller's
+        if (month < 3) {
+            month += 12;
+            year -= 1;
+        }
+        
+        // Calculate using Zeller's Congruence
+        int q = day;
+        int m = month;
+        int K = year % 100;    // Year in century
+        int J = year / 100;    // Century
+        
+        // Apply Zeller's formula
+        int h = (q + ((13 * (m + 1)) / 5) + K + (K / 4) + (J / 4) - 2 * J) % 7;
+        
+        // Map result to day names
+        String[] days = {
+            "Saturday", "Sunday", "Monday",
+            "Tuesday", "Wednesday", "Thursday", "Friday"
+        };
+        return days[h];
+    }
+}
+```
+
+## Test Cases
+
+```python
+def test_cases():
+    # Historical dates
+    assert dayOfTheWeek(15, 8, 1947) == "Friday"     # India's Independence
+    assert dayOfTheWeek(1, 1, 2000) == "Saturday"    # Millennium
+    assert dayOfTheWeek(29, 2, 2020) == "Saturday"   # Leap Year
+    assert dayOfTheWeek(25, 12, 2023) == "Monday"    # Christmas
+```
+
+## Key Features of the Solution
+
+1. **Month Adjustment**: January and February are treated as months 13 and 14 of the previous year
+2. **Modular Arithmetic**: Uses the modulo operator to handle cyclic nature of days
+3. **Array Mapping**: Converts numerical results to day names efficiently
+4. **No External Libraries**: Pure mathematical solution without dependencies
+
+## Real-World Applications 🌍
+
+This algorithm finds applications in:
+- Calendar applications
+- Scheduling systems
+- Historical date analysis
+- Event planning software
+- Game development (time-based events)
+```
+
+## Optimization Tips 💡
+
+1. **Input Validation**: Add checks for valid dates
+2. **Performance**: Pre-calculate century-based values for repeated calculations
+3. **Memory**: Use stack variables instead of heap allocations
+4. **Error Handling**: Implement proper exception handling for invalid inputs
+
+## Further Reading 📚
+
+- [Zeller's Congruence - Blog](https://iq.opengenus.org/zellers-congruence/)
+
+---
+
+Happy coding! Feel free to reach out if you have questions or suggestions for improvements. [Ganesh](mailto:ganeshvathumilli@gmail.com)
